@@ -1,25 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {Component} from 'react';
+import Todos from './Todos';
+import AddTodo from './AddTodo';
+class App extends Component {
+  state={
+    todo:[
+      {id:1,content:'haha'},
+      {id:2, content:'yoyo'}
+    ]
+  }
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  deleteTodo=(id)=>{
+    let temp=this.state.todo.filter(x=>{
+      return x.id!=id
+    });
+
+    this.setState({
+      todo:temp
+    })
+    
+  }
+
+  addTodo=(x)=>{
+     x.id=Math.random();
+     let temp=[...this.state.todo,x];
+     this.setState({
+       todo:temp
+     })
+  }
+  render(){
+    return (
+      <div className="App">
+        <Todos  todo={this.state.todo} deleteTodo={this.deleteTodo} />
+        <AddTodo addTodo={this.addTodo}/>
+      </div>
+    );
+  }
 }
 
 export default App;
